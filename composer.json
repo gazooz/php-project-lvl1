@@ -1,20 +1,22 @@
 {
-    "name": "hexlet/code",
-    "description": "Brain games",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "gazooz",
-            "email": "gazoozd3d@gmail.com"
-        }
-    ],
-    "require": {
-        "wp-cli/php-cli-tools": "^0.11.11"
-    },
-    "bin": [
-        "bin/brain-games"
-    ],
-    "autoload": {
-        "files": ["src/Cli.php"]
+  "name": "hexlet/code",
+  "description": "Brain games",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "gazooz",
+      "email": "gazoozd3d@gmail.com"
     }
+  ],
+  "require": {
+    "wp-cli/php-cli-tools": "^0.11.11"
+  },
+  "bin": [
+    "bin/brain-games"
+  ],
+  "autoload": {
+    "files": [
+      "src/Cli.php"
+    ]
+  }
 }
