@@ -1,8 +1,0 @@
-#!/usr/bin/env php
-<?php
-
-use function Brain\Games\Games\GameEven\play;
-
-require __DIR__ . '/../vendor/autoload.php';
-
-play(3);

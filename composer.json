@@ -16,13 +16,15 @@
   },
   "bin": [
     "bin/brain-games",
-    "bin/brain-even"
+    "bin/brain-play"
   ],
   "autoload": {
     "files": [
-      "src/Cli.php",
-      "src/Games/GameEven.php"
-    ]
+      "src/Cli.php"
+    ],
+    "psr-4": {
+      "BrainGames\\": "src"
+    }
   },
   "scripts": {
     "phpcs": "phpcs"

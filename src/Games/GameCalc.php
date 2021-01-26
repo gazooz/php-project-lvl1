@@ -11,7 +11,7 @@ use function cli\line;
  * Class GameEven
  * @package BrainGames\Games
  */
-class GameEven extends Game
+class GameCalc extends Game
 {
 
     private int $questionNum;
@@ -56,7 +56,7 @@ class GameEven extends Game
         try {
             return random_int(1, PHP_INT_MAX);
         } catch (Exception $exception) {
-            return $this->generateNum();
+            return generateNum();
         }
     }
 }
