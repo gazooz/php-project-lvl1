@@ -54,7 +54,7 @@ class GameEven extends Game
     protected function generateNum(): int
     {
         try {
-            return random_int(1, PHP_INT_MAX);
+            return random_int(1, $this->maxNum);
         } catch (Exception $exception) {
             return $this->generateNum();
         }

@@ -14,7 +14,14 @@ use function cli\line;
 class GameCalc extends Game
 {
 
-    private int $questionNum;
+    private int $questionNum1;
+    private int $questionNum2;
+    private string $questionAction;
+    private array $availableActions = [
+        '+',
+        '-',
+        '*'
+    ];
 
     protected function rules(): void
     {
@@ -23,9 +30,18 @@ class GameCalc extends Game
 
     protected function askQuestion(): void
     {
-        $num = $this->generateNum();
-        $this->questionNum = $num;
-        line('Question: %s', $num);
+        $this->questionNum1 = $this->generateNum();
+        $this->questionNum2 = $this->generateNum();
+        $this->questionAction = $this->generateAction();
+        $questionString = implode(
+            ' ',
+            [
+                $this->questionNum1,
+                $this->questionAction,
+                $this->questionNum2,
+            ]
+        );
+        line('Question: %s', $questionString);
     }
 
     /**
@@ -34,8 +50,8 @@ class GameCalc extends Game
      */
     protected function validateAnswer($answer): bool
     {
-        $expectedAnswer = $this->isEven($this->questionNum) ? 'yes' : 'no';
-        $isCorrectAnswer = $expectedAnswer === $answer;
+        $expectedAnswer = $this->calcResult();
+        $isCorrectAnswer = $expectedAnswer === (int) $answer;
 
         if ($isCorrectAnswer) {
             line('Correct!');
@@ -46,17 +62,40 @@ class GameCalc extends Game
         return $isCorrectAnswer;
     }
 
-    protected function isEven(int $num): bool
+    protected function calcResult(): ?int
     {
-        return $num % 2 === 0;
+        switch ($this->questionAction) {
+            case '+':
+                $result = $this->questionNum1 + $this->questionNum2;
+                break;
+            case '-':
+                $result = $this->questionNum1 - $this->questionNum2;
+                break;
+            case '*':
+                $result = $this->questionNum1 * $this->questionNum2;
+                break;
+            default:
+                $result = null;
+        }
+
+        return $result;
     }
 
     protected function generateNum(): int
     {
         try {
-            return random_int(1, PHP_INT_MAX);
+            return random_int(1, $this->maxNum);
         } catch (Exception $exception) {
-            return generateNum();
+            return $this->generateNum();
+        }
+    }
+
+    protected function generateAction(): string
+    {
+        try {
+            return $this->availableActions[random_int(0, count($this->availableActions) - 1)];
+        } catch (Exception $exception) {
+            return $this->generateAction();
         }
     }
 }

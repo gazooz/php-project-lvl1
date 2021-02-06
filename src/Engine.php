@@ -9,6 +9,7 @@ namespace BrainGames;
 class Engine
 {
     private int $answersToWin;
+    private int $maxNum;
     private array $games;
 
     public function __construct(array $config)
@@ -27,8 +28,11 @@ class Engine
 
         if (isset($gameName, $this->games[$gameName]) && class_exists($gameClass = $this->games[$gameName])) {
             /** @var GameInterface $game */
-            $game = new $gameClass();
-            $game->startGame($this->answersToWin);
+            $game = (new $gameClass());
+
+            $game->withMaxNum($this->maxNum)
+                ->withAnswersToWin($this->answersToWin)
+                ->start();
         }
     }
 }

@@ -8,8 +8,7 @@ namespace BrainGames;
  */
 interface GameInterface
 {
-    /**
-     * @param int $answersToWin
-     */
-    public function startGame(int $answersToWin): void;
+    public function start(): void;
+    public function withMaxNum(int $num): GameInterface;
+    public function withAnswersToWin(int $num): GameInterface;
 }

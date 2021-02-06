@@ -11,6 +11,8 @@ use function cli\prompt;
  */
 abstract class Game implements GameInterface
 {
+    protected int $maxNum = PHP_INT_MAX;
+    protected int $answersToWin = 1;
     protected int $correctAnswersInRow = 0;
     protected string $name = 'Guest';
 
@@ -23,17 +25,14 @@ abstract class Game implements GameInterface
      */
     abstract protected function validateAnswer($answer): bool;
 
-    /**
-     * @inheritDoc
-     */
-    public function startGame($answersToWin): void
+    public function start(): void
     {
         $this->welcome();
         $this->askName();
         $this->greet();
         $this->rules();
 
-        while ($this->correctAnswersInRow < $answersToWin) {
+        while ($this->correctAnswersInRow < $this->answersToWin) {
             $this->askQuestion();
             $answer = $this->askAnswer();
             if ($this->validateAnswer($answer)) {
@@ -45,6 +44,18 @@ abstract class Game implements GameInterface
         }
 
         $this->congratulations();
+    }
+
+    public function withMaxNum(int $num): Game
+    {
+        $this->maxNum = $num;
+        return $this;
+    }
+
+    public function withAnswersToWin(int $num): Game
+    {
+        $this->answersToWin = $num;
+        return $this;
     }
 
     protected function welcome(): void
