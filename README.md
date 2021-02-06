@@ -1,4 +1,7 @@
-[![asciicast](https://asciinema.org/a/CYa1LtHL2N9ijm0cUXYJ75ruL.svg)](https://asciinema.org/a/CYa1LtHL2N9ijm0cUXYJ75ruL)
+[![brain-even](https://asciinema.org/a/CYa1LtHL2N9ijm0cUXYJ75ruL.svg)](https://asciinema.
+org/a/CYa1LtHL2N9ijm0cUXYJ75ruL)
+[![brain-calc](https://asciinema.org/a/hmZRQRl8ehjTlnkWGvDAxX2GQ.svg)](https://asciinema.
+org/a/hmZRQRl8ehjTlnkWGvDAxX2GQ)
 
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/gazooz/php-project-lvl1/workflows/hexlet-check/badge.svg)](https://github.com/gazooz/php-project-lvl1/actions)
