@@ -1,90 +1,191 @@
 <?php
 
-namespace BrainGames;
+namespace BrainGames\Game;
 
 use function cli\line;
 use function cli\prompt;
 
 /**
- * Class GameCalc
- * @package BrainGames\Games
+ * @param $answersToWin
+ * @param int $maxNum
+ * @return array
  */
-abstract class Game implements GameInterface
+function createGame($answersToWin, $maxNum = PHP_INT_MAX): array
 {
-    protected int $maxNum = PHP_INT_MAX;
-    protected int $answersToWin = 1;
-    protected int $correctAnswersInRow = 0;
-    protected string $name = 'Guest';
+    return [
+        'answersToWin' => $answersToWin,
+        'maxNum' => $maxNum,
+        'correctAnswersInRow' => 0,
+        'isLost' => false,
+        'name' => 'Guest',
+    ];
+}
 
-    abstract protected function rules(): void;
-    abstract protected function askQuestion(): void;
+/**
+ * @param $game
+ */
+function start(&$game): void
+{
+    welcome();
+    askName($game);
+    greet($game);
+    rules($game);
 
-    /**
-     * @param mixed $answer
-     * @return bool
-     */
-    abstract protected function validateAnswer($answer): bool;
+    while (continueGame($game)) {
+        $game['askQuestion']($game);
+    }
+}
 
-    public function start(): void
-    {
-        $this->welcome();
-        $this->askName();
-        $this->greet();
-        $this->rules();
+function welcome(): void
+{
+    line('Welcome to the Brain Game!');
+}
 
-        while ($this->correctAnswersInRow < $this->answersToWin) {
-            $this->askQuestion();
-            $answer = $this->askAnswer();
-            if ($this->validateAnswer($answer)) {
-                $this->correctAnswersInRow++;
-            } else {
-                $this->sendIncorrectAnswer();
-                return;
-            }
-        }
+/**
+ * @param $game
+ */
+function greet($game): void
+{
+    line('Hello, %s!', getName($game));
+}
 
-        $this->congratulations();
+/**
+ * @param array $game
+ */
+function rules(array $game)
+{
+    line($game['rules']);
+}
+
+function askAnswer(): string
+{
+    return prompt('Your answer');
+}
+
+/**
+ * @param $game
+ */
+function congratulations($game): void
+{
+    line('Congratulations, %s!', getName($game));
+}
+
+/**
+ * @param $game
+ */
+function sendIncorrectAnswer($game): void
+{
+    line('Let\'s try again, %s!', getName($game));
+}
+
+/**
+ * @param $game
+ * @return bool
+ */
+function continueGame($game): bool
+{
+    if ($game['isLost']) {
+        sendIncorrectAnswer($game);
+        return false;
     }
 
-    public function withMaxNum(int $num): Game
-    {
-        $this->maxNum = $num;
-        return $this;
+    if (getCorrectAnswersInRow($game) >= getAnswersToWin($game)) {
+        congratulations($game);
+        return false;
     }
 
-    public function withAnswersToWin(int $num): Game
-    {
-        $this->answersToWin = $num;
-        return $this;
+    return true;
+}
+
+/**
+ * @param $game
+ */
+function askName(&$game): void
+{
+    setName($game, prompt('May I have your name?'));
+}
+
+/**
+ * @param $game
+ * @param $name
+ */
+function setName(&$game, $name): void
+{
+    $game['name'] = (string)$name;
+}
+
+/**
+ * @param $game
+ * @return string
+ */
+function getName($game): string
+{
+    return $game['name'];
+}
+
+/**
+ * @param $game
+ * @return int
+ */
+function getCorrectAnswersInRow($game): int
+{
+    return $game['correctAnswersInRow'] ?? 0;
+}
+
+/**
+ * @param $game
+ * @return int
+ */
+function getAnswersToWin($game): int
+{
+    return $game['answersToWin'] ?? ANSWERS_TO_WIN;
+}
+
+/**
+ * @param $game
+ * @return int
+ */
+function getMaxNum($game): int
+{
+    return $game['maxNum'] ?? MAX_NUM;
+}
+
+/**
+ * @param $game
+ * @param $answer
+ * @param $expectedAnswer
+ * @return void
+ */
+function validateAnswer(&$game, $answer, $expectedAnswer): void
+{
+    $isCorrectAnswer = $expectedAnswer == $answer;
+
+    if ($isCorrectAnswer) {
+        line('Correct!');
+    } else {
+        line("'%s' is wrong answer ;(. Correct answer was '%s'.", $answer, $expectedAnswer);
     }
 
-    protected function welcome(): void
-    {
-        line('Welcome to the Brain Game!');
+    if ($isCorrectAnswer) {
+        addCorrectAnswer($game);
+    } else {
+        addInCorrectAnswer($game);
     }
+}
 
-    protected function askName(): void
-    {
-        $this->name = prompt('May I have your name?');
-    }
+/**
+ * @param $game
+ */
+function addCorrectAnswer(&$game): void
+{
+    $game['correctAnswersInRow']++;
+}
 
-    protected function greet(): void
-    {
-        line('Hello, %s!', $this->name);
-    }
+/**
+ * @param $game
+ */
+function addInCorrectAnswer(&$game): void
+{
 
-    protected function congratulations(): void
-    {
-        line('Congratulations, %s!', $this->name);
-    }
-
-    protected function askAnswer(): string
-    {
-        return prompt('Your answer');
-    }
-
-    protected function sendIncorrectAnswer(): void
-    {
-        line('Let\'s try again, %s!', $this->name);
-    }
+    $game['isLost'] = true;
 }

@@ -2,37 +2,28 @@
 
 namespace BrainGames;
 
-/**
- * Class Engine
- * @package BrainGames
- */
-class Engine
+use function BrainGames\Game\createGame;
+use function BrainGames\Game\start;
+use function cli\line;
+
+function play(): void
 {
-    private int $answersToWin;
-    private int $maxNum;
-    private array $games;
+    $arguments = getopt('', ['game:']);
+    $gameName = $arguments['game'] ?? null;
 
-    public function __construct(array $config)
-    {
-        foreach ($config as $param => $value) {
-            if (property_exists($this, $param)) {
-                $this->$param = $value;
-            }
+    if (isset($gameName)) {
+        $game = createGame(ANSWERS_TO_WIN, MAX_NUM);
+        switch ($gameName) {
+            case 'calc':
+                Games\GameCalc\configure($game);
+                break;
+            case 'even':
+                Games\GameEven\configure($game);
+                break;
+            default:
+                line('Game not found');
+                return;
         }
-    }
-
-    public function play(): void
-    {
-        $arguments = getopt('', ['game:']);
-        $gameName = $arguments['game'] ?? null;
-
-        if (isset($gameName, $this->games[$gameName]) && class_exists($gameClass = $this->games[$gameName])) {
-            /** @var GameInterface $game */
-            $game = (new $gameClass());
-
-            $game->withMaxNum($this->maxNum)
-                ->withAnswersToWin($this->answersToWin)
-                ->start();
-        }
+        start($game);
     }
 }

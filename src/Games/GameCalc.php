@@ -1,101 +1,99 @@
 <?php
 
-namespace BrainGames\Games;
+namespace BrainGames\Games\GameCalc;
 
-use BrainGames\Game;
 use Exception;
 
+use function BrainGames\Game\addCorrectAnswer;
+use function BrainGames\Game\addInCorrectAnswer;
+use function BrainGames\Game\askAnswer;
+use function BrainGames\Game\getMaxNum;
+use function BrainGames\Game\validateAnswer;
 use function cli\line;
 
 /**
- * Class GameEven
- * @package BrainGames\Games
+ * @param $game
+ * @return void
  */
-class GameCalc extends Game
+function configure(&$game): void
 {
+    $game = array_merge($game, [
+        'rules' => 'Answer "yes" if the number is even, otherwise answer "no".',
+        'askQuestion' => 'BrainGames\Games\GameCalc\askQuestion'
+    ]);
+}
 
-    private int $questionNum1;
-    private int $questionNum2;
-    private string $questionAction;
-    private array $availableActions = [
+/**
+ * @param $game
+ */
+function askQuestion(&$game): void
+{
+    $num1 = generateNum(getMaxNum($game));
+    $num2 = generateNum(getMaxNum($game));
+    $action = generateAction();
+    $questionString = implode(
+        ' ',
+        [
+            $num1,
+            $action,
+            $num2,
+        ]
+    );
+    line('Question: %s', $questionString);
+
+    $answer = askAnswer();
+    $expectedAnswer = calcResult($action, $num1, $num2);
+    validateAnswer($game, $answer, $expectedAnswer);
+}
+
+/**
+ * @param $action
+ * @param $num1
+ * @param $num2
+ * @return int|null
+ */
+function calcResult($action, $num1, $num2): ?int
+{
+    switch ($action) {
+        case '+':
+            $result = $num1 + $num2;
+            break;
+        case '-':
+            $result = $num1 - $num2;
+            break;
+        case '*':
+            $result = $num1 * $num2;
+            break;
+        default:
+            $result = null;
+    }
+
+    return $result;
+}
+
+function generateAction(): string
+{
+    $availableActions = [
         '+',
         '-',
         '*'
     ];
-
-    protected function rules(): void
-    {
-        line('Answer "yes" if the number is even, otherwise answer "no".');
+    try {
+        return $availableActions[random_int(0, count($availableActions) - 1)];
+    } catch (Exception $exception) {
+        return generateAction();
     }
+}
 
-    protected function askQuestion(): void
-    {
-        $this->questionNum1 = $this->generateNum();
-        $this->questionNum2 = $this->generateNum();
-        $this->questionAction = $this->generateAction();
-        $questionString = implode(
-            ' ',
-            [
-                $this->questionNum1,
-                $this->questionAction,
-                $this->questionNum2,
-            ]
-        );
-        line('Question: %s', $questionString);
-    }
-
-    /**
-     * @param mixed $answer
-     * @return bool
-     */
-    protected function validateAnswer($answer): bool
-    {
-        $expectedAnswer = $this->calcResult();
-        $isCorrectAnswer = $expectedAnswer === (int) $answer;
-
-        if ($isCorrectAnswer) {
-            line('Correct!');
-        } else {
-            line("'%s' is wrong answer ;(. Correct answer was '%s'.", $answer, $expectedAnswer);
-        }
-
-        return $isCorrectAnswer;
-    }
-
-    protected function calcResult(): ?int
-    {
-        switch ($this->questionAction) {
-            case '+':
-                $result = $this->questionNum1 + $this->questionNum2;
-                break;
-            case '-':
-                $result = $this->questionNum1 - $this->questionNum2;
-                break;
-            case '*':
-                $result = $this->questionNum1 * $this->questionNum2;
-                break;
-            default:
-                $result = null;
-        }
-
-        return $result;
-    }
-
-    protected function generateNum(): int
-    {
-        try {
-            return random_int(1, $this->maxNum);
-        } catch (Exception $exception) {
-            return $this->generateNum();
-        }
-    }
-
-    protected function generateAction(): string
-    {
-        try {
-            return $this->availableActions[random_int(0, count($this->availableActions) - 1)];
-        } catch (Exception $exception) {
-            return $this->generateAction();
-        }
+/**
+ * @param $maxNum
+ * @return int
+ */
+function generateNum($maxNum): int
+{
+    try {
+        return random_int(1, $maxNum);
+    } catch (Exception $exception) {
+        return generateNum($maxNum);
     }
 }

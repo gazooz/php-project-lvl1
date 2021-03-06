@@ -1,7 +1,9 @@
 #!/usr/bin/env php
 <?php
 
+use function BrainGames\play;
+
 require __DIR__ . '/../vendor/autoload.php';
 $config = require __DIR__ . '/../src/Config.php';
 
-(new BrainGames\Engine($config))->play();
+play();
