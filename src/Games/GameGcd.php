@@ -25,9 +25,9 @@ function configure(array &$game): void
 }
 
 /**
- * @param $game
+ * @param array $game
  */
-function askQuestion(&$game): void
+function askQuestion(array &$game): void
 {
     $num1 = generateNum(1, getMaxNum($game));
     $num2 = generateNum(1, getMaxNum($game));

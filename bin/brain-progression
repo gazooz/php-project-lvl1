@@ -8,6 +8,4 @@ use function BrainGames\Games\GameProgression\configure;
 require __DIR__ . '/../vendor/autoload.php';
 $config = require __DIR__ . '/../src/Config.php';
 
-$game = createGame(ANSWERS_TO_WIN, MAX_NUM);
-configure($game);
-start($game);
+play('progression', $config);

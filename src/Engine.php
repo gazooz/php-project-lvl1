@@ -5,7 +5,7 @@ namespace BrainGames\Engine;
 use function BrainGames\Game\createGame;
 use function BrainGames\Game\start;
 
-function play(): void
+function play(string $gameName, array $config): void
 {
     $gameNamespaces = [
         'calc' => 'BrainGames\Games\GameCalc',
@@ -15,24 +15,14 @@ function play(): void
         'prime' => 'BrainGames\Games\GamePrime',
     ];
 
-    $arguments = getopt('', ['game:']);
+    $game = createGame($config['numbersToWin'], $config['maxNum']);
 
-    if (isset($arguments['game'])) {
-        $gameName = $arguments['game'];
-    } else {
-        return;
-    }
-
-    if (isset($gameName)) {
-        $game = createGame(ANSWERS_TO_WIN, MAX_NUM);
-
-        if (isset($gameNamespaces[$gameName])) {
-            $configure = $gameNamespaces[$gameName] . '\configure';
-            if (!is_callable($configure)) {
-                return;
-            }
-            $configure($game);
+    if (isset($gameNamespaces[$gameName])) {
+        $configure = $gameNamespaces[$gameName] . '\configure';
+        if (!is_callable($configure)) {
+            return;
         }
-        start($game);
+        $configure($game);
     }
+    start($game);
 }

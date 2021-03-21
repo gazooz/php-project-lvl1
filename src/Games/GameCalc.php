@@ -69,5 +69,5 @@ function calcResult(string $action, int $num1, int $num2): ?int
             return null;
     }
 
-    return (int)$result;
+    return $result;
 }

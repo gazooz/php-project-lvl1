@@ -1,13 +1,9 @@
 #!/usr/bin/env php
 <?php
 
-use function BrainGames\Game\createGame;
-use function BrainGames\Game\start;
-use function BrainGames\Games\GameCalc\configure;
+use function BrainGames\Engine\play;
 
 require __DIR__ . '/../vendor/autoload.php';
 $config = require __DIR__ . '/../src/Config.php';
 
-$game = createGame(ANSWERS_TO_WIN, MAX_NUM);
-configure($game);
-start($game);
+play('calc', $config);

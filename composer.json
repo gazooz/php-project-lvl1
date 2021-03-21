@@ -17,7 +17,6 @@
   },
   "bin": [
     "bin/brain-games",
-    "bin/brain-play",
     "bin/brain-even",
     "bin/brain-calc",
     "bin/brain-gcd",

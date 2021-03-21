@@ -52,7 +52,7 @@ function greet(array $game): void
 /**
  * @param array $game
  */
-function rules(array $game)
+function rules(array $game): void
 {
     line($game['rules']);
 }
@@ -138,7 +138,7 @@ function getCorrectAnswersInRow(array $game): int
  */
 function getAnswersToWin(array $game): int
 {
-    return $game['answersToWin'] ?? ANSWERS_TO_WIN;
+    return $game['answersToWin'] ;
 }
 
 /**
@@ -147,7 +147,7 @@ function getAnswersToWin(array $game): int
  */
 function getMaxNum(array $game): int
 {
-    return $game['maxNum'] ?? MAX_NUM;
+    return $game['maxNum'];
 }
 
 /**

@@ -5,12 +5,12 @@ validate:
 brain-games:
 	./bin/brain-games
 brain-even:
-	./bin/brain-play --game even
+	./bin/brain-play even
 brain-calc:
-	./bin/brain-play --game calc
+	./bin/brain-play calc
 brain-gcd:
-	./bin/brain-play --game gcd
+	./bin/brain-play gcd
 brain-progression:
-	./bin/brain-play --game progression
+	./bin/brain-play progression
 lint:
 	composer run-script phpcs -- --standard=PSR12 src bin
