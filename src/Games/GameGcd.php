@@ -1,14 +1,12 @@
 <?php
 
-namespace BrainGames\Games\GameEven;
-
-use Exception;
+namespace BrainGames\Games\GameGcd;
 
 use function BrainGames\Game\askAnswer;
 use function BrainGames\Game\getMaxNum;
 use function BrainGames\Game\validateAnswer;
+use function BrainGames\Math\gcd;
 use function BrainGames\Math\generateNum;
-use function BrainGames\Math\isEven;
 use function cli\line;
 
 /**
@@ -20,8 +18,8 @@ function configure(&$game): void
     $game = array_merge(
         $game,
         [
-            'rules' => 'Answer "yes" if the number is even, otherwise answer "no".',
-            'askQuestion' => 'BrainGames\Games\GameEven\askQuestion'
+            'rules' => 'Find the greatest common divisor of given numbers.',
+            'askQuestion' => 'BrainGames\Games\GameGcd\askQuestion'
         ]
     );
 }
@@ -31,10 +29,11 @@ function configure(&$game): void
  */
 function askQuestion(&$game): void
 {
-    $num = generateNum(getMaxNum($game));
-    line('Question: %s', $num);
+    $num1 = generateNum(getMaxNum($game));
+    $num2 = generateNum(getMaxNum($game));
+    line('Question: %s %s', $num1, $num2);
 
     $answer = askAnswer();
-    $expectedAnswer = isEven($num) ? 'yes' : 'no';
+    $expectedAnswer = gcd($num1, $num2);
     validateAnswer($game, $answer, $expectedAnswer);
 }

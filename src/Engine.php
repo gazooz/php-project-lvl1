@@ -20,6 +20,9 @@ function play(): void
             case 'even':
                 Games\GameEven\configure($game);
                 break;
+            case 'gcd':
+                Games\GameGcd\configure($game);
+                break;
             default:
                 line('Game not found');
                 return;
