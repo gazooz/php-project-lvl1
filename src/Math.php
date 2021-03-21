@@ -14,7 +14,7 @@ function generateNum(int $minNum, int $maxNum): int
     try {
         return random_int($minNum, $maxNum);
     } catch (Exception $exception) {
-        return generateNum($maxNum);
+        return generateNum($minNum, $maxNum);
     }
 }
 
@@ -59,5 +59,5 @@ function generateAction(): string
  */
 function gcd(int $a, int $b): int
 {
-    return $b ? gcd($b, $a % $b) : $a;
+    return (bool)$b ? gcd($b, $a % $b) : $a;
 }

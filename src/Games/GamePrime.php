@@ -10,10 +10,10 @@ use function BrainGames\Math\isPrime;
 use function cli\line;
 
 /**
- * @param $game
+ * @param array $game
  * @return void
  */
-function configure(&$game): void
+function configure(array &$game): void
 {
     $game = array_merge(
         $game,
@@ -25,9 +25,9 @@ function configure(&$game): void
 }
 
 /**
- * @param $game
+ * @param array $game
  */
-function askQuestion(&$game): void
+function askQuestion(array &$game): void
 {
     $num = generateNum(1, getMaxNum($game));
     line('Question: %s', $num);

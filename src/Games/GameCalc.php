@@ -2,20 +2,18 @@
 
 namespace BrainGames\Games\GameCalc;
 
-use Exception;
-
 use function BrainGames\Game\askAnswer;
 use function BrainGames\Game\getMaxNum;
 use function BrainGames\Game\validateAnswer;
-use function BrainGames\Math\generateNum;
 use function BrainGames\Math\generateAction;
+use function BrainGames\Math\generateNum;
 use function cli\line;
 
 /**
- * @param $game
+ * @param array $game
  * @return void
  */
-function configure(&$game): void
+function configure(array &$game): void
 {
     $game = array_merge(
         $game,
@@ -27,9 +25,9 @@ function configure(&$game): void
 }
 
 /**
- * @param $game
+ * @param array $game
  */
-function askQuestion(&$game): void
+function askQuestion(array &$game): void
 {
     $num1 = generateNum(1, getMaxNum($game));
     $num2 = generateNum(1, getMaxNum($game));
@@ -45,17 +43,17 @@ function askQuestion(&$game): void
     line('Question: %s', $questionString);
 
     $answer = askAnswer();
-    $expectedAnswer = calcResult($action, $num1, $num2);
+    $expectedAnswer = (string)calcResult($action, $num1, $num2);
     validateAnswer($game, $answer, $expectedAnswer);
 }
 
 /**
- * @param $action
- * @param $num1
- * @param $num2
+ * @param string $action
+ * @param int $num1
+ * @param int $num2
  * @return int|null
  */
-function calcResult($action, $num1, $num2): ?int
+function calcResult(string $action, int $num1, int $num2): ?int
 {
     switch ($action) {
         case '+':
@@ -68,8 +66,8 @@ function calcResult($action, $num1, $num2): ?int
             $result = $num1 * $num2;
             break;
         default:
-            $result = null;
+            return null;
     }
 
-    return $result;
+    return (int)$result;
 }

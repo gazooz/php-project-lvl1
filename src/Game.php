@@ -6,11 +6,11 @@ use function cli\line;
 use function cli\prompt;
 
 /**
- * @param $answersToWin
+ * @param int $answersToWin
  * @param int $maxNum
  * @return array
  */
-function createGame($answersToWin, $maxNum = PHP_INT_MAX): array
+function createGame(int $answersToWin, int $maxNum = PHP_INT_MAX): array
 {
     return [
         'answersToWin' => $answersToWin,
@@ -22,9 +22,9 @@ function createGame($answersToWin, $maxNum = PHP_INT_MAX): array
 }
 
 /**
- * @param $game
+ * @param array $game
  */
-function start(&$game): void
+function start(array &$game): void
 {
     welcome();
     askName($game);
@@ -42,9 +42,9 @@ function welcome(): void
 }
 
 /**
- * @param $game
+ * @param array $game
  */
-function greet($game): void
+function greet(array $game): void
 {
     line('Hello, %s!', getName($game));
 }
@@ -63,26 +63,26 @@ function askAnswer(): string
 }
 
 /**
- * @param $game
+ * @param array $game
  */
-function congratulations($game): void
+function congratulations(array $game): void
 {
     line('Congratulations, %s!', getName($game));
 }
 
 /**
- * @param $game
+ * @param array $game
  */
-function sendIncorrectAnswer($game): void
+function sendIncorrectAnswer(array $game): void
 {
     line('Let\'s try again, %s!', getName($game));
 }
 
 /**
- * @param $game
+ * @param array $game
  * @return bool
  */
-function continueGame($game): bool
+function continueGame(array $game): bool
 {
     if ($game['isLost']) {
         sendIncorrectAnswer($game);
@@ -98,67 +98,67 @@ function continueGame($game): bool
 }
 
 /**
- * @param $game
+ * @param array $game
  */
-function askName(&$game): void
+function askName(array &$game): void
 {
     setName($game, prompt('May I have your name?'));
 }
 
 /**
- * @param $game
- * @param $name
+ * @param array $game
+ * @param string $name
  */
-function setName(&$game, $name): void
+function setName(array &$game, string $name): void
 {
     $game['name'] = (string)$name;
 }
 
 /**
- * @param $game
+ * @param array $game
  * @return string
  */
-function getName($game): string
+function getName(array $game): string
 {
     return $game['name'];
 }
 
 /**
- * @param $game
+ * @param array $game
  * @return int
  */
-function getCorrectAnswersInRow($game): int
+function getCorrectAnswersInRow(array $game): int
 {
     return $game['correctAnswersInRow'] ?? 0;
 }
 
 /**
- * @param $game
+ * @param array $game
  * @return int
  */
-function getAnswersToWin($game): int
+function getAnswersToWin(array $game): int
 {
     return $game['answersToWin'] ?? ANSWERS_TO_WIN;
 }
 
 /**
- * @param $game
+ * @param array $game
  * @return int
  */
-function getMaxNum($game): int
+function getMaxNum(array $game): int
 {
     return $game['maxNum'] ?? MAX_NUM;
 }
 
 /**
- * @param $game
- * @param $answer
- * @param $expectedAnswer
+ * @param array $game
+ * @param string $answer
+ * @param string $expectedAnswer
  * @return void
  */
-function validateAnswer(&$game, $answer, $expectedAnswer): void
+function validateAnswer(array &$game, string $answer, string $expectedAnswer): void
 {
-    $isCorrectAnswer = $expectedAnswer == $answer;
+    $isCorrectAnswer = $expectedAnswer === $answer;
 
     if ($isCorrectAnswer) {
         line('Correct!');
@@ -174,18 +174,17 @@ function validateAnswer(&$game, $answer, $expectedAnswer): void
 }
 
 /**
- * @param $game
+ * @param array $game
  */
-function addCorrectAnswer(&$game): void
+function addCorrectAnswer(array &$game): void
 {
     $game['correctAnswersInRow']++;
 }
 
 /**
- * @param $game
+ * @param array $game
  */
-function addInCorrectAnswer(&$game): void
+function addInCorrectAnswer(array &$game): void
 {
-
     $game['isLost'] = true;
 }

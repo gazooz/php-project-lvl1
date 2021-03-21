@@ -12,10 +12,10 @@ define('PROGRESSION_MIN_LENGTH', 5);
 define('PROGRESSION_MAX_LENGTH', 10);
 
 /**
- * @param $game
+ * @param array $game
  * @return void
  */
-function configure(&$game): void
+function configure(array &$game): void
 {
     $game = array_merge(
         $game,
@@ -27,9 +27,9 @@ function configure(&$game): void
 }
 
 /**
- * @param $game
+ * @param array $game
  */
-function askQuestion(&$game): void
+function askQuestion(array &$game): void
 {
     $length = generateNum(PROGRESSION_MIN_LENGTH, PROGRESSION_MAX_LENGTH);
     $difference = generateNum(1, getMaxNum($game));
@@ -42,7 +42,7 @@ function askQuestion(&$game): void
     }
 
     $key = array_rand($progression);
-    $expectedAnswer = $progression[$key];
+    $expectedAnswer = (string)$progression[$key];
     $progression[$key] = '..';
 
     line('Question: %s', implode(' ', $progression));

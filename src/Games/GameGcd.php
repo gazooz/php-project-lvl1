@@ -10,10 +10,10 @@ use function BrainGames\Math\generateNum;
 use function cli\line;
 
 /**
- * @param $game
+ * @param array $game
  * @return void
  */
-function configure(&$game): void
+function configure(array &$game): void
 {
     $game = array_merge(
         $game,
@@ -34,6 +34,6 @@ function askQuestion(&$game): void
     line('Question: %s %s', $num1, $num2);
 
     $answer = askAnswer();
-    $expectedAnswer = gcd($num1, $num2);
+    $expectedAnswer = (string)gcd($num1, $num2);
     validateAnswer($game, $answer, $expectedAnswer);
 }
