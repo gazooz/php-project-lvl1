@@ -43,7 +43,7 @@ function askQuestion(&$game): void
 
     $key = array_rand($progression);
     $expectedAnswer = $progression[$key];
-    $progression[$key] = '...';
+    $progression[$key] = '..';
 
     line('Question: %s', implode(' ', $progression));
 
