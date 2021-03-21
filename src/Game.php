@@ -111,7 +111,7 @@ function askName(array &$game): void
  */
 function setName(array &$game, string $name): void
 {
-    $game['name'] = (string)$name;
+    $game['name'] = $name;
 }
 
 /**
