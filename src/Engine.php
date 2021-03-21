@@ -15,7 +15,7 @@ function play(string $gameName, array $config): void
         'prime' => 'BrainGames\Games\GamePrime',
     ];
 
-    $game = createGame($config['numbersToWin'], $config['maxNum']);
+    $game = createGame($config['answersToWin'], $config['maxNum']);
 
     if (isset($gameNamespaces[$gameName])) {
         $configure = $gameNamespaces[$gameName] . '\configure';

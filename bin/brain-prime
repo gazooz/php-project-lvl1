@@ -1,9 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-use function BrainGames\Game\createGame;
-use function BrainGames\Game\start;
-use function BrainGames\Games\GamePrime\configure;
+use function BrainGames\Engine\play;
 
 require __DIR__ . '/../vendor/autoload.php';
 $config = require __DIR__ . '/../src/Config.php';
