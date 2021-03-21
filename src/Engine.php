@@ -5,16 +5,16 @@ namespace BrainGames\Engine;
 use function BrainGames\Game\createGame;
 use function BrainGames\Game\start;
 
-$gameNamespaces = [
-    'calc' => 'BrainGames\Games\GameCalc',
-    'even' => 'BrainGames\Games\GameEven',
-    'gcd' => 'BrainGames\Games\GameGcd',
-    'progression' => 'BrainGames\Games\GameProgression',
-    'prime' => 'BrainGames\Games\GamePrime',
-];
-
 function play(): void
 {
+    $gameNamespaces = [
+        'calc' => 'BrainGames\Games\GameCalc',
+        'even' => 'BrainGames\Games\GameEven',
+        'gcd' => 'BrainGames\Games\GameGcd',
+        'progression' => 'BrainGames\Games\GameProgression',
+        'prime' => 'BrainGames\Games\GamePrime',
+    ];
+
     $arguments = getopt('', ['game:']);
 
     if (isset($arguments['game'])) {
