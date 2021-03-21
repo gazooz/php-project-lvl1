@@ -31,7 +31,7 @@ function configure(&$game): void
  */
 function askQuestion(&$game): void
 {
-    $num = generateNum(getMaxNum($game));
+    $num = generateNum(1, getMaxNum($game));
     line('Question: %s', $num);
 
     $answer = askAnswer();

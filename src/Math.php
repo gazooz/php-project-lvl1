@@ -5,13 +5,14 @@ namespace BrainGames\Math;
 use Exception;
 
 /**
+ * @param int $minNum
  * @param int $maxNum
  * @return int
  */
-function generateNum(int $maxNum): int
+function generateNum(int $minNum, int $maxNum): int
 {
     try {
-        return random_int(1, $maxNum);
+        return random_int($minNum, $maxNum);
     } catch (Exception $exception) {
         return generateNum($maxNum);
     }
@@ -20,6 +21,20 @@ function generateNum(int $maxNum): int
 function isEven(int $num): bool
 {
     return $num % 2 === 0;
+}
+
+function isPrime(int $num): bool
+{
+    if ($num === 1) {
+        return false;
+    }
+
+    for ($i = 2; $i <= sqrt($num); $i++) {
+        if ($num % $i === 0) {
+            return false;
+        }
+    }
+    return true;
 }
 
 

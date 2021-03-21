@@ -16,7 +16,12 @@
   },
   "bin": [
     "bin/brain-games",
-    "bin/brain-play"
+    "bin/brain-play",
+    "bin/brain-even",
+    "bin/brain-calc",
+    "bin/brain-gcd",
+    "bin/brain-progression",
+    "bin/brain-prime"
   ],
   "autoload": {
     "files": [
@@ -26,7 +31,9 @@
       "src/Game.php",
       "src/Games/GameCalc.php",
       "src/Games/GameEven.php",
-      "src/Games/GameGcd.php"
+      "src/Games/GameGcd.php",
+      "src/Games/GameProgression.php",
+      "src/Games/GamePrime.php"
     ]
   },
   "scripts": {

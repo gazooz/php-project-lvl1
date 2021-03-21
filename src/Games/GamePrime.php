@@ -1,12 +1,12 @@
 <?php
 
-namespace BrainGames\Games\GameGcd;
+namespace BrainGames\Games\GamePrime;
 
 use function BrainGames\Game\askAnswer;
 use function BrainGames\Game\getMaxNum;
 use function BrainGames\Game\validateAnswer;
-use function BrainGames\Math\gcd;
 use function BrainGames\Math\generateNum;
+use function BrainGames\Math\isPrime;
 use function cli\line;
 
 /**
@@ -18,8 +18,8 @@ function configure(&$game): void
     $game = array_merge(
         $game,
         [
-            'rules' => 'Find the greatest common divisor of given numbers.',
-            'askQuestion' => 'BrainGames\Games\GameGcd\askQuestion'
+            'rules' => 'Answer "yes" if the number is prime, otherwise answer "no".',
+            'askQuestion' => 'BrainGames\Games\GamePrime\askQuestion'
         ]
     );
 }
@@ -29,11 +29,10 @@ function configure(&$game): void
  */
 function askQuestion(&$game): void
 {
-    $num1 = generateNum(1, getMaxNum($game));
-    $num2 = generateNum(1, getMaxNum($game));
-    line('Question: %s %s', $num1, $num2);
+    $num = generateNum(1, getMaxNum($game));
+    line('Question: %s', $num);
 
     $answer = askAnswer();
-    $expectedAnswer = gcd($num1, $num2);
+    $expectedAnswer = isPrime($num) ? 'yes' : 'no';
     validateAnswer($game, $answer, $expectedAnswer);
 }

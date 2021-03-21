@@ -31,8 +31,8 @@ function configure(&$game): void
  */
 function askQuestion(&$game): void
 {
-    $num1 = generateNum(getMaxNum($game));
-    $num2 = generateNum(getMaxNum($game));
+    $num1 = generateNum(1, getMaxNum($game));
+    $num2 = generateNum(1, getMaxNum($game));
     $action = generateAction();
     $questionString = implode(
         ' ',
