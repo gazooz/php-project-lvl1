@@ -4,6 +4,5 @@
 use function BrainGames\Engine\play;
 
 require __DIR__ . '/../vendor/autoload.php';
-$config = require __DIR__ . '/../src/Config.php';
 
-play('even', $config);
+play('even');

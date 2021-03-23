@@ -6,7 +6,7 @@ use function BrainGames\Game\start;
 use function cli\line;
 use const BrainGames\Config\CONFIG;
 
-function playGame(string $gameName): void
+function play(string $gameName): void
 {
     $gameName = 'Game' . ucwords($gameName);
     $gameNamespace = "BrainGames\\Games\\{$gameName}";
