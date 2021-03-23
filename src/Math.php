@@ -4,7 +4,6 @@ namespace BrainGames\Math;
 
 use Exception;
 
-
 function generateNum(int $minNum, int $maxNum): int
 {
     try {

@@ -2,9 +2,9 @@
 
 namespace BrainGames\Engine;
 
-use const BrainGames\Config\CONFIG;
 use function BrainGames\Game\start;
 use function cli\line;
+use const BrainGames\Config\CONFIG;
 
 function playGame(string $gameName): void
 {
