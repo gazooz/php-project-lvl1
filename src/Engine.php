@@ -4,6 +4,7 @@ namespace BrainGames\Engine;
 
 use function BrainGames\Game\start;
 use function cli\line;
+
 use const BrainGames\Config\CONFIG;
 
 function play(string $gameName): void
