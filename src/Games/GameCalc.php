@@ -8,7 +8,7 @@ use function cli\line;
 
 const RULES = 'What is the result of the expression?';
 
-function askQuestion($config): string
+function askQuestion(array $config): string
 {
     $num1 = generateNum(1, $config['maxNum']);
     $num2 = generateNum(1, $config['maxNum']);

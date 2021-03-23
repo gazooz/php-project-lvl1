@@ -38,7 +38,7 @@ function welcome(): void
     line('Welcome to the Brain Game!');
 }
 
-function greet($name): void
+function greet(string $name): void
 {
     line('Hello, %s!', $name);
 }
