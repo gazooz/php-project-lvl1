@@ -2,37 +2,16 @@
 
 namespace BrainGames\Games\GameEven;
 
-use function BrainGames\Game\askAnswer;
-use function BrainGames\Game\getMaxNum;
-use function BrainGames\Game\validateAnswer;
 use function BrainGames\Math\generateNum;
 use function BrainGames\Math\isEven;
 use function cli\line;
 
-/**
- * @param array $game
- * @return void
- */
-function configure(array &$game): void
-{
-    $game = array_merge(
-        $game,
-        [
-            'rules' => 'Answer "yes" if the number is even, otherwise answer "no".',
-            'askQuestion' => 'BrainGames\Games\GameEven\askQuestion'
-        ]
-    );
-}
+const RULES = 'What is the result of the expression?';
 
-/**
- * @param array $game
- */
-function askQuestion(array &$game): void
+function askQuestion(array $config): string
 {
-    $num = generateNum(1, getMaxNum($game));
+    $num = generateNum(1, $config['maxNum']);
     line('Question: %s', $num);
 
-    $answer = askAnswer();
-    $expectedAnswer = isEven($num) ? 'yes' : 'no';
-    validateAnswer($game, $answer, $expectedAnswer);
+    return isEven($num) ? 'yes' : 'no';
 }

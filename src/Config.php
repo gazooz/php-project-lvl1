@@ -1,6 +1,8 @@
 <?php
 
-return [
+namespace BrainGames\Config;
+
+const CONFIG = [
     'answersToWin' => 3,
-    'maxNum' => 99,
+    'maxNum' => 9
 ];

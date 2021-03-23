@@ -2,35 +2,16 @@
 
 namespace BrainGames\Games\GameCalc;
 
-use function BrainGames\Game\askAnswer;
-use function BrainGames\Game\getMaxNum;
-use function BrainGames\Game\validateAnswer;
 use function BrainGames\Math\generateAction;
 use function BrainGames\Math\generateNum;
 use function cli\line;
 
-/**
- * @param array $game
- * @return void
- */
-function configure(array &$game): void
-{
-    $game = array_merge(
-        $game,
-        [
-            'rules' => 'What is the result of the expression?',
-            'askQuestion' => 'BrainGames\Games\GameCalc\askQuestion'
-        ]
-    );
-}
+const RULES = 'What is the result of the expression?';
 
-/**
- * @param array $game
- */
-function askQuestion(array &$game): void
+function askQuestion($config): string
 {
-    $num1 = generateNum(1, getMaxNum($game));
-    $num2 = generateNum(1, getMaxNum($game));
+    $num1 = generateNum(1, $config['maxNum']);
+    $num2 = generateNum(1, $config['maxNum']);
     $action = generateAction();
     $questionString = implode(
         ' ',
@@ -42,17 +23,9 @@ function askQuestion(array &$game): void
     );
     line('Question: %s', $questionString);
 
-    $answer = askAnswer();
-    $expectedAnswer = (string)calcResult($action, $num1, $num2);
-    validateAnswer($game, $answer, $expectedAnswer);
+    return (string)calcResult($action, $num1, $num2);
 }
 
-/**
- * @param string $action
- * @param int $num1
- * @param int $num2
- * @return int|null
- */
 function calcResult(string $action, int $num1, int $num2): ?int
 {
     switch ($action) {

@@ -2,27 +2,20 @@
 
 namespace BrainGames\Engine;
 
-use function BrainGames\Game\createGame;
+use const BrainGames\Config\CONFIG;
 use function BrainGames\Game\start;
+use function cli\line;
 
-function play(string $gameName, array $config): void
+function playGame(string $gameName): void
 {
-    $gameNamespaces = [
-        'calc' => 'BrainGames\Games\GameCalc',
-        'even' => 'BrainGames\Games\GameEven',
-        'gcd' => 'BrainGames\Games\GameGcd',
-        'progression' => 'BrainGames\Games\GameProgression',
-        'prime' => 'BrainGames\Games\GamePrime',
-    ];
-
-    $game = createGame($config['answersToWin'], $config['maxNum']);
-
-    if (isset($gameNamespaces[$gameName])) {
-        $configure = $gameNamespaces[$gameName] . '\configure';
-        if (!is_callable($configure)) {
-            return;
-        }
-        $configure($game);
+    $gameName = 'Game' . ucwords($gameName);
+    $gameNamespace = "BrainGames\\Games\\{$gameName}";
+    $config = CONFIG;
+    if (!defined("{$gameNamespace}\\RULES") || !function_exists("{$gameNamespace}\\askQuestion")) {
+        line('Game not found');
+        return;
     }
-    start($game);
+    $config['rules'] = constant("{$gameNamespace}\\RULES");
+    $config['question'] = "{$gameNamespace}\\askQuestion";
+    start($config);
 }
